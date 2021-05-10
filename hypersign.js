@@ -11,5 +11,3 @@ let ws = new WebSocket("wss://ssi.hypermine.in/developerws/");
             alert(authorizationToken)
         }
     };
-
-
