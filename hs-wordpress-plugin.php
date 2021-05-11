@@ -7,7 +7,8 @@
 require_once 'apiSetting.php';
 require_once 'userManager.php';
 require_once 'hsAPIClient.php';
-require_once( 'heartbeat-api-pulse.php' );
+require_once ( 'heartbeat-api-pulse.php' );
+require_once 'RESTApi.php';
 
 function func_load_vuescripts() {
     wp_register_script( 'wp_jqueryjs', 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
