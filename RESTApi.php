@@ -1,5 +1,6 @@
 <?php
 
+// ref: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 
 function my_awesome_func( $data ) {
     return "Hello user!";
