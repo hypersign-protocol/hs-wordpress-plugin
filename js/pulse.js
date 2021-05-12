@@ -1,4 +1,20 @@
-jQuery(document).ready( function($) {
+async function fetchChallenge(){
+    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hypersign/v1/challenge");
+    const json = await resp.json();
+    return json;
+}
+
+
+jQuery(document).ready(async function($) {
+
+   
+
+    console.log("inside pulse");
+    const json = await fetchChallenge();
+    console.log(json);
+    const challenge = json.message;
+    $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
+    
 
     // Initial pulse data
     var pulse = { debug: true };
@@ -14,7 +30,7 @@ jQuery(document).ready( function($) {
 
         // Send data to Heartbeat
         if ( data.hasOwnProperty( 'pulse' ) ) {
-
+            data.pulse.challenge = challenge;
             if ( data.pulse.debug === 'true' ) {
 
                 console.log( 'Data Sent: ' );

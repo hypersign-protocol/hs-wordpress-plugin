@@ -1,0 +1,17 @@
+<?php
+
+require_once 'routesFactory.php';
+
+$rf =  new RouteFactory();
+
+function my_awesome_func( $data ) {
+    return "Hello user!";
+} 
+
+
+// 'myplugin/v1', '/author'
+$rf->registerRoute("hypersign/v1", "/challenge", "GET",  "my_awesome_func" );
+
+?>
+
+
