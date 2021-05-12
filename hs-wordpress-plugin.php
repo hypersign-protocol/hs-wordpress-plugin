@@ -20,31 +20,40 @@ function func_load_vuescripts() {
 add_action('wp_enqueue_scripts', 'func_load_vuescripts');
 
 
-
-
-
-
-// heart beat
+//// Heart beat - polling
 $heartbeat_api_pulse = new Heartbeat_API_Pulse( __FILE__ );
-    $heartbeat_api_pulse->version = '1.0.0';
-    $heartbeat_api_pulse->init();
+$heartbeat_api_pulse->version = '1.0.0';
+$heartbeat_api_pulse->init();
 
 
 //Add shortscode
 function func_wp_vue(){
-    // Loading all scripts 
+    ///// Loading all scripts 
     wp_enqueue_script('wp_jqueryjs');
     wp_enqueue_script('wp_qrcodejs');
     wp_enqueue_script('hypersign');
     
     
-    
-    // add_new_user("Hypersign user", "test1@gmail.com");
-    
+    //// Add a new user
+    add_new_user("Hypersign user", "test1@gmail.com");
+
+    //// Retrive setting variables
+    $hypersign_plugin_api_setting_options = get_option( 'hypersign_plugin_api_setting_option_name' );    
+    $app_id_0 = $hypersign_plugin_api_setting_options['app_id_0'];
+    $app_secret_1 = $hypersign_plugin_api_setting_options['app_secret_1'];
+
+    echo $app_id_0;
+    echo $app_secret_1 ;
+
+    //// Create a login page
     echo create_login_page_post();
 
+
+    //// Call GET api to retrive data
     $qrcodeData = get_did();
     echo $qrcodeData;
+    
+
     $src= "<h3>Hypersign Login</h3></br><div id='qrcode'></div></br><h5>Scan QR code using Hypersign Wallet</h5>";
     return $src;
   } 
