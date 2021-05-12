@@ -6,10 +6,11 @@ function create_login_page_post(){
  
     // Gather post data.
 $my_post = array(
-    'post_title'    => 'Hypersign Login Post',
+    'post_title'    => 'Hypersign Login page',
     'post_content'  => '[hypersign]',
     'post_status'   => 'publish',
     'post_author'   => $user_id,
+    'post_type'     => 'page',
     'post_category' => array( 8,39 )
 );
 // https://developer.wordpress.org/reference/functions/wp_insert_post/
@@ -24,6 +25,8 @@ if(!is_wp_error($post_id)){
     echo $post_id->get_error_message();
   }
 }
+
+
 
 
 ?>

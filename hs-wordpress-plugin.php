@@ -9,6 +9,7 @@ require_once 'userManager.php';
 require_once 'hsAPIClient.php';
 require_once ( 'heartbeat-api-pulse.php' );
 require_once 'RESTApi.php';
+require_once 'createNewPage.php';
 
 function func_load_vuescripts() {
     wp_register_script( 'wp_jqueryjs', 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
@@ -38,9 +39,9 @@ function func_wp_vue(){
     
     
     
-    add_new_user("Hypersign user", "test1@gmail.com");
+    // add_new_user("Hypersign user", "test1@gmail.com");
     
- 
+    echo create_login_page_post();
 
     $qrcodeData = get_did();
     echo $qrcodeData;
