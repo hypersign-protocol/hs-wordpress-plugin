@@ -42,8 +42,8 @@ function func_wp_vue(){
     $app_id_0 = $hypersign_plugin_api_setting_options['app_id_0'];
     $app_secret_1 = $hypersign_plugin_api_setting_options['app_secret_1'];
 
-    echo $app_id_0;
-    echo $app_secret_1 ;
+    echo "<p><ul><li>AppId: " . $app_id_0 . "</li><li>AppSecret: " . $app_secret_1 . "</li></ul></p>" ;
+    
 
     //// Create a login page
     echo create_login_page_post();
@@ -51,10 +51,10 @@ function func_wp_vue(){
 
     //// Call GET api to retrive data
     $qrcodeData = get_did();
-    echo $qrcodeData;
+    
     
 
-    $src= "<h3>Hypersign Login</h3></br><div id='qrcode'></div></br><h5>Scan QR code using Hypersign Wallet</h5>";
+    $src= "<p>" . $qrcodeData .  "</p><h3>Hypersign Login</h3></br><div id='qrcode'></div></br><h5>Scan QR code using Hypersign Wallet</h5>";
     return $src;
   } 
 
