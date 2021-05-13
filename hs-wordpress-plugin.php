@@ -5,7 +5,8 @@
  */
 
 
-require_once 'routes/API.php';
+// require_once 'routes/API.php';
+require_once 'routes/index.php';
 require_once 'routes/heartbeat-api-pulse.php';
 
 
