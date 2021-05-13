@@ -67,9 +67,8 @@ class Heartbeat_API_Pulse
      */
     public function enqueue_scripts()
     {
-       
         // Load the pulse javascript
-        wp_enqueue_script($this->token . '-pulse', $this->plugin_url . 'pulse.js', array('jquery', 'heartbeat'), '1.0.0', true);
+        wp_enqueue_script($this->token . '-pulse', $this->plugin_url . 'js/pulse.js', array('jquery', 'heartbeat'), '1.0.0', true);
     } // End enqueue_scripts()
 
     /**

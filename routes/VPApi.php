@@ -30,21 +30,19 @@ function prefix_get_endpoint_phrase($data )
 
     return rest_ensure_response($resp_data);
 }
-
 /**
  * This function is where we register our routes for our example endpoint.
  */
 function prefix_register_example_routes()
 {
-    // register_rest_route() handles more arguments but we are going to stick to the basics for now.
-    register_rest_route('hypersign/v1', '/challenge', array(
+    
+    // send the VP from mobile app to here
+    register_rest_route('hypersign/v1', '/auth', array(
         // By using this constant we ensure that when the WP_REST_Server changes our readable endpoints will work as intended.
-        'methods'  => WP_REST_Server::READABLE,
+        'methods'  => WP_REST_Server::EDITABLE,
         // Here we register our callback. The callback is fired when this endpoint is matched by the WP_REST_Server class.
         'callback' => 'prefix_get_endpoint_phrase',
     ));
 }
 
 add_action('rest_api_init', 'prefix_register_example_routes');
-
-?>

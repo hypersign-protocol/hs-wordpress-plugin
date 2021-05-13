@@ -1,19 +1,26 @@
-fetch("http://192.168.43.43/index.php/wp-json/hypersign/v1/challenge").then(resp => resp.json()).then(json => {
-    console.log(json);
-    $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
-})
+// fetch("http://192.168.43.43/index.php/wp-json/hypersign/v1/challenge").then(resp => resp.json()).then(json => {
+//     console.log(json);
+//     $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
+// })
+console.log("Hypersign loaded")
+
+async function fetchChallenge(){
+    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hypersign/v1/challenge");
+    const json = await resp.json();
+    return json;
+}
 
 
-// let ws = new WebSocket("wss://ssi.hypermine.in/developerws/");
-//     ws.onmessage = function({data }) {
-//         let messageData = JSON.parse(data);
-//         $("#qrcode").html("");
-//         if (messageData.op == 'init') {
-//             $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(messageData.data) });
-//         } else if (messageData.op == 'end') {
-//             ws.close();
-//             $("#qrcode").hide();
-//             const authorizationToken = messageData.data.token
-//             alert(authorizationToken)
-//         }
-//     };
+
+
+async function  updateQR(){
+
+    
+        const json = await fetchChallenge();
+        console.log(json);
+        const challenge = json.message;
+        setCookie("challenge", challenge);
+        $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
+    
+}
+updateQR();
