@@ -3,7 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/hs-wordpress-plugin/utils/config.php';
 // include "IRoutes.php";
 
-class Challenge 
+class Credential 
 {
 
     private $namespace;
@@ -14,12 +14,13 @@ class Challenge
         $this->namespace = $namespace;
         $this->route = $route;
         $this->method = $method;
-        add_action('rest_api_init', [$this, "challenge_registerRoute"]);
+        add_action('rest_api_init', [$this, "credential_registerRoute"]);
     }
 
-    function challenge_controller($data)
+    function credential_controller($data)
     {
         $configInstance = Config::getInstance();
+        
         $appSetting = $configInstance->getAPPSetting();
 
         $resp_data = array(
@@ -29,7 +30,7 @@ class Challenge
         );
 
         // Call external API 
-        $challenge = $configInstance->get(Config::URL_AUTH_DID);
+        $challenge = $configInstance->get(Config::URL_HS_CREDENTIAL);
 
         if (empty($challenge) || is_null($challenge)) {
             $resp_data["status"] = 400;
@@ -39,18 +40,19 @@ class Challenge
             $resp_data["message"] = $challenge;
         }
 
-        return rest_ensure_response( $resp_data);
+        return rest_ensure_response([$resp_data, $appSetting]);
     }
 
 
-    public function challenge_registerRoute()
+    public function credential_registerRoute()
     {
         register_rest_route($this->namespace, $this->route, array(
             'methods'  => $this->method,
-            'callback' => [$this, 'challenge_controller'],
+            'callback' => [$this, 'credential_controller'],
         ));
     }
 }
+
 
 
 ?>
