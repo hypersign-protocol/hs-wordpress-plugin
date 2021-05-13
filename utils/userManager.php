@@ -5,14 +5,14 @@ interface IUserManger{
     public function addUser($user_name, $user_email);
 }
 
-class UserManager{
+class UserManager implements IUserManger{
 
     public function __construct()
     {
         
     }
 
-    function add_new_user($user_name, $user_email){
+    public function addUser($user_name, $user_email){
         $user_id = username_exists( $user_name );
     
         // check that the email address does not belong to a registered user

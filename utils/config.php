@@ -2,19 +2,22 @@
 
 include "apiSetting.php";
 include "restClient.php";
+require_once "storeManager.php";
 
 interface IConfig
 {
     public function getAPPSetting();
+    public function getStoreInstance();
     
 }
 
 // Config is singleton class: only one object of this class can be created
-class Config extends RestClient implements IConfig
+class Config extends RestClient  implements IConfig
 {
     public const URL_AUTH_DID = "https://ssi.hypermine.in/hsauth/hs/api/v2/authdid";
     public const URL_HS_CREDENTIAL = "https://ssi.hypermine.in/hsauth/hs/api/v2/authdid";
     private $app_setting;
+    private $store;
     private static $instance = null;
 
     private function __construct()
@@ -26,8 +29,10 @@ class Config extends RestClient implements IConfig
             "APP_ID" => $hypersign_plugin_api_setting_options['app_id_0'],
             "APP_SECRET" => $hypersign_plugin_api_setting_options['app_secret_1']
         );
-    }
 
+        $this->store =  new Store();
+    }
+    
     public static function getInstance()
     {
         
@@ -43,7 +48,10 @@ class Config extends RestClient implements IConfig
         
         return  $this->app_setting;
     }
-    
+
+    public function getStoreInstance(){
+        return $this->store;
+    }
 }
 
 

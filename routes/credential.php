@@ -19,9 +19,11 @@ class Credential implements IRoutes
 
     function controller($data)
     {
+        
         $configInstance = Config::getInstance();
         
         $appSetting = $configInstance->getAPPSetting();
+        $storeInstance = $configInstance->getStoreInstance();
 
         $resp_data = array(
             "status" => 200,
@@ -40,7 +42,10 @@ class Credential implements IRoutes
             $resp_data["message"] = $challenge;
         }
 
-        return rest_ensure_response([$resp_data, $appSetting]);
+        
+        $res = $storeInstance->get($challenge);
+        
+        return rest_ensure_response([$res]);
     }
 
 
