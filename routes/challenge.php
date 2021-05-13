@@ -19,9 +19,6 @@ class Challenge implements IRoutes
 
     function controller($data)
     {
-        $yourvar = array();
-        
-
         $configInstance = Config::getInstance();
         $appSetting = $configInstance->getAPPSetting();
         $storeInstance =  $configInstance->getStoreInstance();
@@ -36,8 +33,11 @@ class Challenge implements IRoutes
         $challenge = $configInstance->get(Config::URL_AUTH_DID);
         
         // storing into local storage
-        $storeInstance->set($challenge, "stored_in_store");
-        $res = $storeInstance->get($challenge);
+        $storeInstance->set($challenge, array(
+            "isVerifed" => false,
+            "user" => array()
+        ));
+        
 
         if (empty($challenge) || is_null($challenge)) {
             $resp_data["status"] = 400;
@@ -47,7 +47,9 @@ class Challenge implements IRoutes
             $resp_data["message"] = $challenge;
         }
 
-        return rest_ensure_response( [ $res]);
+        $resp_data["result"] = $storeInstance->get($challenge);
+        
+        return rest_ensure_response( $resp_data );
     }
 
 

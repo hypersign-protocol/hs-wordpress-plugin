@@ -38,14 +38,18 @@ class Credential implements IRoutes
             $resp_data["status"] = 400;
             $resp_data["error"] =  "Could not fetch challenge";
         } else {
-
             $resp_data["message"] = $challenge;
         }
 
-        
+
+        $res = $storeInstance->get($challenge);
+        $res["isVerifed"] =  true;
+        $res["user"]["name"] = "vishwas1";
+        $res["user"]["email"] = "vishu.anand1@fgmasdsasd.com";
+        $storeInstance->set($challenge, $res);
         $res = $storeInstance->get($challenge);
         
-        return rest_ensure_response([$res]);
+        return rest_ensure_response($res);
     }
 
 

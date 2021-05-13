@@ -21,7 +21,7 @@ jQuery(document).ready(async function ($) {
 
             // Send data to Heartbeat
             if (data.hasOwnProperty('pulse')) {
-                data.pulse.challenge = challenge;
+                data.challenge = challenge;
                 if (data.pulse.debug === 'true') {
 
                     console.log('Data Sent: ');

@@ -13,7 +13,7 @@ class UserManager implements IUserManger{
     }
 
     public function addUser($user_name, $user_email){
-        $user_id = username_exists( $user_name );
+        $user_id = username_exists($user_name);
     
         // check that the email address does not belong to a registered user
         if ( ! $user_id && email_exists( $user_email ) === false ) {
@@ -25,6 +25,9 @@ class UserManager implements IUserManger{
                 $random_password,
                 $user_email
             );
+        }else{
+            // user is already created
+            // so do nothing.
         }
     }
 

@@ -1,4 +1,7 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/hs-wordpress-plugin/utils/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/hs-wordpress-plugin/utils/userManager.php';
+
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
@@ -27,6 +30,9 @@ class Heartbeat_API_Pulse
     public $token;
     public $plugin_url;
     public $version;
+    private $configInstance;
+    private $storeInstance;
+    private $userManager;
 
     /**
      * Constructor.
@@ -39,6 +45,9 @@ class Heartbeat_API_Pulse
         // Class variables
         $this->token = 'heartbeat-api-pulse';
         $this->plugin_url = trailingslashit(plugins_url('', $file));
+        $this->configInstance = Config::getInstance();
+        $this->storeInstance = $this->configInstance->getStoreInstance();
+        $this->userManager = new UserManager();
 
         // Actions & filters
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_styles'));
@@ -106,10 +115,38 @@ class Heartbeat_API_Pulse
     {
 
         // Do custom code here
-        $data['user'] = 'User is not logged in.';
-        $data['php'] = 'Sent from PHP.';
-        $response = $data;
+        $challenge  = $data['challenge'];   
+        if ( empty( $challenge ) ) {
+            return $response;
+        }
+        
 
+        $res = $this->storeInstance->get($challenge);
+        
+        if($res["isVerifed"] === true){
+            $data["user"] = $res["user"];
+
+            /// check if this user is not created then create a new user
+            $this->userManager->addUser(
+                $data["user"]["name"],
+                $data["user"]["email"]
+            );
+
+            /// generate authorization toke  or figure out way how to authenticate user\
+
+
+            /// login to the user
+
+
+            // send him to the next page
+
+            /// stop the hearbaeat ?
+            // wp_deregister_script('heartbeat-api-pulse-pulse-js');
+            
+
+        }
+
+        $response = $data;
         return $response;
     } // End respond_to_browser_unauthenticated()
 
