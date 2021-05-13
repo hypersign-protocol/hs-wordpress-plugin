@@ -1,9 +1,9 @@
 <?php
 // do it in better way
 require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/hs-wordpress-plugin/utils/config.php';
-// include "IRoutes.php";
+require_once "IRoutes.php";
 
-class Challenge 
+class Challenge implements IRoutes
 {
 
     private $namespace;
@@ -14,10 +14,10 @@ class Challenge
         $this->namespace = $namespace;
         $this->route = $route;
         $this->method = $method;
-        add_action('rest_api_init', [$this, "challenge_registerRoute"]);
+        add_action('rest_api_init', [$this, "registerRoute"]);
     }
 
-    function challenge_controller($data)
+    function controller($data)
     {
         $configInstance = Config::getInstance();
         $appSetting = $configInstance->getAPPSetting();
@@ -43,11 +43,11 @@ class Challenge
     }
 
 
-    public function challenge_registerRoute()
+    public function registerRoute()
     {
         register_rest_route($this->namespace, $this->route, array(
             'methods'  => $this->method,
-            'callback' => [$this, 'challenge_controller'],
+            'callback' => [$this, 'controller'],
         ));
     }
 }

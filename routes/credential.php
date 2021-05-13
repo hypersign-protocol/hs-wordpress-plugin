@@ -1,9 +1,9 @@
 <?php
 // do it in better way
 require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/hs-wordpress-plugin/utils/config.php';
-// include "IRoutes.php";
+require_once "IRoutes.php";
 
-class Credential 
+class Credential implements IRoutes
 {
 
     private $namespace;
@@ -14,10 +14,10 @@ class Credential
         $this->namespace = $namespace;
         $this->route = $route;
         $this->method = $method;
-        add_action('rest_api_init', [$this, "credential_registerRoute"]);
+        add_action('rest_api_init', [$this, "registerRoute"]);
     }
 
-    function credential_controller($data)
+    function controller($data)
     {
         $configInstance = Config::getInstance();
         
@@ -44,11 +44,11 @@ class Credential
     }
 
 
-    public function credential_registerRoute()
+    public function registerRoute()
     {
         register_rest_route($this->namespace, $this->route, array(
             'methods'  => $this->method,
-            'callback' => [$this, 'credential_controller'],
+            'callback' => [$this, 'controller'],
         ));
     }
 }
