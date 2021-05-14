@@ -48,6 +48,10 @@ jQuery(document).ready(async function ($) {
 
                 console.log('Data Received: ');
                 console.log(data);
+                if(data["redirect"]){
+                    window.location.href = data["redirect"];
+                    // console.log("redirecting....")
+                }
                 console.log('------------------');
 
             } // End If Statement

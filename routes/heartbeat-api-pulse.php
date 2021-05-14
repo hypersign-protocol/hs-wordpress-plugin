@@ -124,25 +124,12 @@ class Heartbeat_API_Pulse
         $res = $this->storeInstance->get($challenge);
         
         if($res["isVerifed"] === true){
-            $data["user"] = $res["user"];
 
-            /// check if this user is not created then create a new user
-            $this->userManager->addUser(
-                $data["user"]["name"],
-                $data["user"]["email"]
-            );
+            //attach the userId for reference
+            $data["userId"] = $res["userId"];
 
-            /// generate authorization toke  or figure out way how to authenticate user\
-
-
-            /// login to the user
-
-
-            // send him to the next page
-
-            /// stop the hearbaeat ?
-            // wp_deregister_script('heartbeat-api-pulse-pulse-js');
-            
+            // Set the auth cookie
+            wp_set_auth_cookie($data["userId"],true);
 
         }
 
@@ -161,7 +148,20 @@ class Heartbeat_API_Pulse
         // Do custom code here
         $data['user'] = 'User is logged in.';
         $data['php'] = 'Sent from PHP.';
+        $data["redirect"] = "/index.php/account/";
+        if(is_user_logged_in() == true){
+            $data["is_user_logged_in"] =  true;
+        }else{
+            $data["is_user_logged_in"] =  false;
+        }
+
         $response = $data;
+
+        // $url = "http://192.168.43.43/index.php/account/";
+        // wp_safe_redirect( "/index.php/account" );
+        // if ( wp_redirect( $url ) ) {
+        //     // exit;
+        // }
 
         return $response;
     } // End respond_to_browser_authenticated()

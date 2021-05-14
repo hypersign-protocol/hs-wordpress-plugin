@@ -25,9 +25,13 @@ class UserManager implements IUserManger{
                 $random_password,
                 $user_email
             );
+            // wp_authenticate($user_name, $random_password);
+            // wp_authenticate_email_password($user_name, $user_email, $random_password);
+            return [true, $user_id];
         }else{
             // user is already created
             // so do nothing.
+            return [false, $user_id];
         }
     }
 
