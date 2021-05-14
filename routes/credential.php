@@ -53,8 +53,8 @@ class Credential implements IRoutes
         $res = $storeInstance->get($challenge);
         
         $res["isVerifed"] =  true;
-        $res["user"]["name"] = "vishwas6";
-        $res["user"]["email"] = "vishwas6@hypermine.in";
+        $res["user"]["name"] = "vishwas7";
+        $res["user"]["email"] = "vishwas7@hypermine.in";
 
         $isUserCreated = $this->userManager->addUser(
             $res["user"]["name"],

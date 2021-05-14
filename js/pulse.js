@@ -26,6 +26,9 @@ jQuery(document).ready(async function ($) {
 
                     console.log('Data Sent: ');
                     console.log(data);
+                    // if(data["userId"]){
+
+                    // }
                     console.log('------------------');
 
                 } // End If Statement

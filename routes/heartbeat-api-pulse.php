@@ -131,6 +131,8 @@ class Heartbeat_API_Pulse
             // Set the auth cookie
             wp_set_auth_cookie($data["userId"],true);
 
+            $data["redirect"] = "/index.php/account/";
+
         }
 
         $response = $data;
@@ -148,7 +150,7 @@ class Heartbeat_API_Pulse
         // Do custom code here
         $data['user'] = 'User is logged in.';
         $data['php'] = 'Sent from PHP.';
-        $data["redirect"] = "/index.php/account/";
+        // $data["redirect"] = "/index.php/account/";
         if(is_user_logged_in() == true){
             $data["is_user_logged_in"] =  true;
         }else{
