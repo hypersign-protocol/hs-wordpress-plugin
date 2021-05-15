@@ -1,13 +1,13 @@
 <?php
 
 include "challenge.php";
-// include "credential.php";
+include "credential.php";
 
 
 
 
-new Challenge("hypersign/api/v1", "/challenge", "GET");
-// new Credential("hypersign/v1", "/auth", "GET");
+new Challenge("hs/api/v2", "/challenge", "GET");
+new Credential("hs/api/v2", "/auth", "POST");
 
 
 ?>

@@ -2,7 +2,7 @@
 console.log("Hypersign loaded")
 
 async function fetchChallenge() {
-    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hypersign/api/v1/challenge");
+    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hs/api/v2/challenge");
     const json = await resp.json();
     return json;
 }
