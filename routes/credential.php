@@ -20,7 +20,15 @@ class Credential implements IRoutes
         add_action('rest_api_init', [$this, "registerRoute"]);
     }
 
-    function controller($data)
+    function controller1(WP_REST_Request $request){
+
+        $parameters = $request->get_json_params();
+        $param = $request->get_query_params( 'challenge' );
+
+        return rest_ensure_response([$parameters, $param]);
+    }
+
+    function controller(WP_REST_Request $data) : WP_REST_Response | WP_Error
     {
         
         $configInstance = Config::getInstance();
@@ -80,7 +88,7 @@ class Credential implements IRoutes
     {
         register_rest_route($this->namespace, $this->route, array(
             'methods'  => $this->method,
-            'callback' => [$this, 'controller'],
+            'callback' => [$this, 'controller1'],
         ));
     }
 }

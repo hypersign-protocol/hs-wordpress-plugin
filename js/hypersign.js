@@ -2,7 +2,7 @@
 console.log("Hypersign loaded")
 
 async function fetchChallenge() {
-    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hypersign/v1/challenge");
+    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hypersign/api/v1/challenge");
     const json = await resp.json();
     return json;
 }
@@ -10,7 +10,8 @@ async function fetchChallenge() {
 async function updateQR() {
     const json = await fetchChallenge();
     console.log(json);
-    const challenge = json.message;
+    const challenge = json.challenge;
+    console.log(challenge);
     setCookie("challenge", challenge);
     $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
 

@@ -15,7 +15,9 @@ interface IConfig
 class Config extends RestClient  implements IConfig
 {
     public const URL_AUTH_DID = "https://ssi.hypermine.in/hsauth/hs/api/v2/authdid";
-    public const URL_HS_CREDENTIAL = "https://ssi.hypermine.in/hsauth/hs/api/v2/authdid";
+    public const URL_HS_SESSION = "http://192.168.43.43:3003/hs/api/v2/newsession";
+    public const URL_HS_CREDENTIAL = "http://192.168.43.43:3003/hs/api/v2/auth";
+    
     private $app_setting;
     private $store;
     private static $instance = null;

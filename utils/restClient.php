@@ -34,14 +34,18 @@ Class RestClient implements IRestClient{
 
         $args = array(
             'method'      => $method,
-            'body'        => ((count($body) > 0 ) && ($method == "POST" || "PUT"))  ? $body : array() ,
+            'body'        => ((count($body) > 0 ) && ($method == "POST" || "PUT"))  ? json_encode($body) : json_encode(array()) ,
             'timeout'     => '5',
             'redirection' => '5',
             'httpversion' => '1.0',
             'blocking'    => true,
-            'headers'     => count($headers) <= 0 ? array() : $headers,
+            'headers'     => count($headers) <= 0 ?  array(
+                'content-type' => 'application/json'
+            )  : $headers,
             'cookies'     => array(),
         );
+
+        
 
 
         $response = wp_remote_request( $url, $args );
@@ -78,16 +82,23 @@ Class RestClient implements IRestClient{
 
 
         $args = array(
-            'body'        => count($body) <= 0 ? array() : $body,
+            'body'        => count($body) <= 0 ? json_encode(array()) : json_encode($body),
             'timeout'     => '5',
             'redirection' => '5',
             'httpversion' => '1.0',
             'blocking'    => true,
-            'headers'     => count($headers) <= 0 ? array() : $headers,
+            'headers'     => count($headers) <= 0 ? array(
+                'content-type' => 'application/json'
+            ) : $headers,
             'cookies'     => array(),
         );
 
         $response = wp_remote_post($url, $args );
+
+    
+        if(is_wp_error($response)){
+            return $this->getFormattedResposne("Error");
+        }
 
         $http_code = wp_remote_retrieve_response_code( $response );
         if($http_code != 200){
