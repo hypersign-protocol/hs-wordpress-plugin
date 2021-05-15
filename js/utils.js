@@ -22,3 +22,7 @@ function getCookie(cname) {
   }
   return "";
 }
+
+function eraseCookie(name) {   
+  document.cookie = name+'=; Max-Age=-99999999;';  
+}

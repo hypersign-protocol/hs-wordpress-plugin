@@ -1,19 +1,22 @@
 
 console.log("Hypersign loaded")
 
-async function fetchChallenge() {
-    const resp = await fetch("http://192.168.43.43/index.php/wp-json/hs/api/v2/challenge");
-    const json = await resp.json();
-    return json;
-}
 
-async function updateQR() {
-    const json = await fetchChallenge();
-    console.log(json);
-    const challenge = json.challenge;
-    console.log(challenge);
-    setCookie("challenge", challenge);
+class MyClass extends EventTarget {
+
+    updateQRCodeUI() {
+      this.dispatchEvent(new Event('something'));
+    }
+  }
+  
+
+function updateQRCodeListener(e){
+    const json = e.currentTarget.json 
+    console.log(e.currentTarget);
     $("#qrcode").qrcode({ "width": 300, "height": 300, "text": JSON.stringify(json) });
-
+    console.log('Instance fired "something".', e);
 }
-updateQR();
+  const instance = new MyClass();
+  
+  instance.addEventListener('something', updateQRCodeListener, false);
+  

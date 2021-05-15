@@ -38,8 +38,7 @@ class Challenge implements IRoutes
         
         // // storing into local storage
         $storeInstance->set($challenge, array(
-            "isVerifed" => false,
-            "user" => array()
+            "isVerifed" => false
         ));
         
 
