@@ -20,7 +20,7 @@ class Credential implements IRoutes
         add_action('rest_api_init', [$this, "registerRoute"]);
     }
 
-    function controller($data)
+    function controller(WP_REST_Request $request)
     {
         
         $configInstance = Config::getInstance();
@@ -28,51 +28,39 @@ class Credential implements IRoutes
         $appSetting = $configInstance->getAPPSetting();
         $storeInstance = $configInstance->getStoreInstance();
 
-        $resp_data = array(
-            "status" => 200,
-            "message" =>  null,
-            "error" => null
-        );
+
+        $body = $request->get_json_params();
+        $challenge = $body['challenge'];
 
         // Call external API 
-        $challenge = $configInstance->get(Config::URL_HS_CREDENTIAL);
-
-        if (empty($challenge) || is_null($challenge)) {
-            $resp_data["status"] = 400;
-            $resp_data["error"] =  "Could not fetch challenge";
-        } else {
-            $resp_data["message"] = $challenge;
-        }
-
-
         // user data comes from VP
+        $user = $configInstance->request("POST", Config::URL_HS_CREDENTIAL, $body, null);
+        
 
         // Check if this user exists in the db
         // if not create user and fetch the user_id
         // if yes fetch the user_id`
-        $res = $storeInstance->get($challenge);
-        
-        $res["isVerifed"] =  true;
-        $res["user"]["name"] = "vishwas7";
-        $res["user"]["email"] = "vishwas7@hypermine.in";
-
+        // $res = $storeInstance->get($challenge);
         $isUserCreated = $this->userManager->addUser(
-            $res["user"]["name"],
-            $res["user"]["email"]
+            $user["hs_userdata"]["name"],
+            $user["hs_userdata"]["email"]
          );
-        $res["user"]["id"] = $isUserCreated[1];
+        
 
         // put the user_id in the challeneStore wrt isVerfied 
         $data = array();
-        $data["isVerifed"] =  true;
-        $data["userId"] =  $isUserCreated[1];
-
+        $data["isVerifed"] = true;
+        $data["userId"] = $isUserCreated[1];
         $storeInstance->set($challenge,  $data);
 
 
-        // $res = $storeInstance->get($challenge);
+        $resp_data = array(
+            "status" => 200,
+            "message" => "success",
+            "error" => null
+        );
         
-        return rest_ensure_response([$res, $data]);
+        return rest_ensure_response($resp_data);
     }
 
 

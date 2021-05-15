@@ -17,7 +17,7 @@ class Challenge implements IRoutes
         add_action('rest_api_init', [$this, "registerRoute"]);
     }
 
-    function controller($data)
+    public function controller(WP_REST_Request $request)
     {
         $configInstance = Config::getInstance();
         $appSetting = $configInstance->getAPPSetting();
@@ -29,27 +29,30 @@ class Challenge implements IRoutes
             "error" => null
         );
 
+        $body = array("baseUrl" => "http://192.168.43.43/index.php/wp-json/");
+
         // Call external API 
-        $challenge = $configInstance->get(Config::URL_AUTH_DID);
+        $qrData = $configInstance->request("POST", Config::URL_HS_SESSION, $body, null);
+
+        $challenge = $qrData["challenge"];
         
-        // storing into local storage
+        // // storing into local storage
         $storeInstance->set($challenge, array(
-            "isVerifed" => false,
-            "user" => array()
+            "isVerifed" => false
         ));
         
 
-        if (empty($challenge) || is_null($challenge)) {
-            $resp_data["status"] = 400;
-            $resp_data["error"] =  "Could not fetch challenge";
-        } else {
+        // if (empty($challenge) || is_null($challenge)) {
+        //     $resp_data["status"] = 400;
+        //     $resp_data["error"] =  "Could not fetch challenge";
+        // } else {
 
-            $resp_data["message"] = $challenge;
-        }
+        //     $resp_data["message"] = $challenge;
+        // }
 
-        $resp_data["result"] = $storeInstance->get($challenge);
+        // $resp_data["result"] = $storeInstance->get($challenge);
         
-        return rest_ensure_response( $resp_data );
+        return rest_ensure_response( $qrData );
     }
 
 

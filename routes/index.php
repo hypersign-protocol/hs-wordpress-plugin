@@ -3,18 +3,11 @@
 include "challenge.php";
 include "credential.php";
 
-function wtnerd_global_vars() {
-
-	global $challengeStore;
-	$challengeStore = array(
-        
-    );
-
-}
-add_action( 'init', 'wtnerd_global_vars' );
 
 
-new Challenge("hypersign/v1", "/challenge", "GET");
-new Credential("hypersign/v1", "/auth", "GET");
+
+new Challenge("hs/api/v2", "/challenge", "GET");
+new Credential("hs/api/v2", "/auth", "POST");
+
 
 ?>
