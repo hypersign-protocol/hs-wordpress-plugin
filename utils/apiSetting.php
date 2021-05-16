@@ -5,8 +5,6 @@
  * at http://jeremyhixon.com/wp-tools/option-page/
  */
 
-require_once "functions.php";
-
 class HypersignPluginAPISetting
 {
 	private $hypersign_api_setting_options;
@@ -150,7 +148,7 @@ class HypersignPluginAPISetting
 	public function app_secret_1_callback()
 	{
 		printf(
-			'<input class="regular-text" type="text" name="hypersign_api_setting_option_name[app_secret_1]" id="app_secret_1" value="%s">',
+			'<input class="regular-text" type="password" name="hypersign_api_setting_option_name[app_secret_1]" id="app_secret_1" value="%s">',
 			isset($this->hypersign_api_setting_options['app_secret_1']) ? esc_attr($this->hypersign_api_setting_options['app_secret_1']) : ''
 		);
 	}
