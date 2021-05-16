@@ -5,22 +5,28 @@ jQuery(document).ready(async function ($) {
     console.log("inside pulse");
 
     async function fetchChallenge() {
-        eraseCookie("challenge");
-        const resp = await fetch(`${window.location}index.php/wp-json/hs/api/v2/challenge`);
-        const json = await resp.json();
-        return json;
+        try{
+            const resp = await fetch(`${window.location.protocol}//${window.location.host}/index.php/wp-json/hs/api/v2/challenge`);
+            const json = await resp.json();
+            return json["message"];
+        }catch(e){
+            console.log(e)
+        }
+        
     }
     
     async function updateQR() {
         const json = await fetchChallenge();
-        console.log(json);
-        let challenge = json.challenge;
-
-        instance.json = json;
-        instance.updateQRCodeUI();
-
-        console.log(challenge);
-        return challenge;
+        if(json){
+            let challenge = json.challenge;
+    
+            instance.json = json;
+            instance.updateQRCodeUI();
+    
+            console.log(challenge);
+            return challenge;
+        }
+        
     
     }
 
@@ -47,6 +53,7 @@ jQuery(document).ready(async function ($) {
     
                         console.log('Data Sent: ');
                         console.log(data);
+                        
                         // if(data["userId"]){
     
                         // }
