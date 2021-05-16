@@ -122,6 +122,7 @@ class Heartbeat_API_Pulse
         
 
         $res = $this->storeInstance->get($challenge);
+        $allapp_setting = $this -> configInstance->getAPPSetting();
         
         if($res["isVerifed"] === true){
 
@@ -131,10 +132,10 @@ class Heartbeat_API_Pulse
             // Set the auth cookie
             wp_set_auth_cookie($data["userId"],true);
 
-            $data["redirect"] = "/index.php/account/";
+            $data["redirect"] = $allapp_setting["REDIRECT_URI"]; 
+            
 
         }
-
         $response = $data;
         return $response;
     } // End respond_to_browser_unauthenticated()

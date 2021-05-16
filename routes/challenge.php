@@ -51,8 +51,16 @@ class Challenge implements IRoutes
         // }
 
         // $resp_data["result"] = $storeInstance->get($challenge);
+
+        $resp_data = array(
+            "status" => 200,
+            "message" => $qrData,
+            "error" => null
+        );
         
-        return rest_ensure_response( $qrData );
+        return rest_ensure_response($resp_data);
+        
+        // return rest_ensure_response( $qrData );
     }
 
 

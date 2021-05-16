@@ -29,7 +29,7 @@ function func_wp_vue()
   wp_enqueue_script('wp_qrcodejs');
   wp_enqueue_script('hsutils');
   wp_enqueue_script('hypersign');
-  $src = "<h3>Hypersign Login</h3></br><div id='qrcode'></div></br><h5>Scan QR code using Hypersign Wallet</h5>";
+  $src = "<div id='qrcode' style='border: 1px solid #80808042; padding: 12px;width: 330px;'></div><span style='padding-left:10%; text-align: center; font-size: medium; color: grey'>Scan QR code using Hypersign Wallet</span>";
   return $src;
 }
 

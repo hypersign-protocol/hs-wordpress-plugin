@@ -23,7 +23,6 @@ interface IConfig
 // Config is singleton class: only one object of this class can be created
 class Config extends RestClient  implements IConfig
 {
-    public const URL_AUTH_DID = "https://ssi.hypermine.in/hsauth/hs/api/v2/authdid";
     public const URL_HS_SESSION = "http://192.168.43.43:3003/hs/api/v2/newsession";
     public const URL_HS_CREDENTIAL = "http://192.168.43.43:3003/hs/api/v2/auth";
     
@@ -39,8 +38,9 @@ class Config extends RestClient  implements IConfig
         $this->app_setting = array(
             "APP_ID" => $hypersign_plugin_api_setting_options['app_id_0'],
             "APP_SECRET" => $hypersign_plugin_api_setting_options['app_secret_1'],
-            "REDIRECT_URI" => $hypersign_plugin_api_setting_options["after_login_2"],
-            "LOCK_ACCESS" => $hypersign_plugin_api_setting_options["lock_access_to_wp_login_php_3"]
+            "LOGIN_PAGE" => $hypersign_plugin_api_setting_options["login_page_2"],
+            "REDIRECT_URI" => $hypersign_plugin_api_setting_options["after_login_3"],
+            "LOCK_ACCESS" => $hypersign_plugin_api_setting_options["lock_access_to_wp_login_php_4"]
         );
 
 
@@ -49,6 +49,10 @@ class Config extends RestClient  implements IConfig
         if ( $this->app_setting["LOCK_ACCESS"] ) {
             add_action( 'init', array( $this, 'hs_prevent_wp_login' ));
         }
+
+        // if( !is_null($this->app_setting["LOGIN_PAGE"] )){
+        //     wp_login_url($this->app_setting["LOGIN_PAGE"]);
+        // }
     }
 
     private function hs_prevent_wp_login() {
