@@ -102,6 +102,9 @@ class HypersignPluginAPISetting
 			'hypersign-api-setting-admin', // page
 			'hypersign_api_setting_setting_section' // section
 		);
+
+		
+		
 	}
 
 	public function hypersign_api_setting_sanitize($input)
@@ -127,8 +130,7 @@ class HypersignPluginAPISetting
 		}
 
 
-
-
+		
 
 		return $sanitary_values;
 	}
@@ -152,58 +154,33 @@ class HypersignPluginAPISetting
 			isset($this->hypersign_api_setting_options['app_secret_1']) ? esc_attr($this->hypersign_api_setting_options['app_secret_1']) : ''
 		);
 	}
+	
 
+	public function login_page_2_callback() {
+		?> <select class="regular-text" name="hypersign_api_setting_option_name[login_page_2]" id="login_page_2">
+			<?php $pages = get_pages(); ?>
+			<?php foreach ($pages as $page) { ?>
 
+			<?php $selected = (isset( $this->hypersign_api_setting_options['login_page_2'] ) && $this->hypersign_api_setting_options['login_page_2'] === get_page_link($page->ID)) ? 'selected' : '' ; ?>
+			<option value="<?php echo get_page_link($page->ID) ?>" <?php echo $selected; ?>> <?php echo $page->post_title ?></option>
 
-	public function login_page_2_callback()
-	{
-
-	?>
-		<select class="regular-text" name="hypersign_api_setting_option_name[login_page_2]" id="login_page_2">
-
-			<?php
-			$pages = get_pages();
-			foreach ($pages as $page) {
-				$selected = (isset($this->hypersign_api_setting_options['login_page_2']) && $this->hypersign_api_setting_options['login_page_2'] === get_page_link($page->ID)) ? 'selected' : '';
-				$option = '<option value="' . get_page_link($page->ID) . '   ' . $selected .  '    ">';
-				$option .= $page->post_title;
-				$option .= '</option>';
-				echo $option;
-			}
-			?>
-		</select>
-		<p class="description">Select the page where you want to redirect once user is authenticated.</p>
-	<?php
+			<?php } ?>
+		</select> <?php
 	}
 
+	public function after_login_3_callback() {
+		?> <select class="regular-text" name="hypersign_api_setting_option_name[after_login_3]" id="after_login_3">
+			<?php $pages = get_pages(); ?>
+			<?php foreach ($pages as $page) { ?>
 
-	public function after_login_3_callback()
-	{
+			<?php $selected = (isset( $this->hypersign_api_setting_options['after_login_3'] ) && $this->hypersign_api_setting_options['after_login_3'] === get_page_link($page->ID)) ? 'selected' : '' ; ?>
+			<option value="<?php echo get_page_link($page->ID) ?>" <?php echo $selected; ?>> <?php echo $page->post_title ?></option>
 
-
-	?>
-
-		<select class="regular-text" name="hypersign_api_setting_option_name[after_login_3]" id="after_login_3">
-
-			<?php
-			$pages = get_pages();
-			foreach ($pages as $page) {
-				$selected = (isset($this->hypersign_api_setting_options['after_login_3']) && $this->hypersign_api_setting_options['after_login_3'] === get_page_link($page->ID)) ? 'selected' : '';
-				$option = '<option value="' . get_page_link($page->ID) . '   ' . $selected .  '    ">';
-				$option .= $page->post_title;
-				$option .= '</option>';
-				echo $option;
-			}
-			?>
-		</select>
-		<p class="description">Select the page where you have added (or want to add) the login shortcode.</p>
-<?php
+			<?php } ?>
+		</select> <?php
 	}
 
-
-
-
-
+	
 	public function lock_access_to_wp_login_php_4_callback()
 	{
 		printf(

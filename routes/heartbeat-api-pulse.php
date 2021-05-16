@@ -136,9 +136,6 @@ class Heartbeat_API_Pulse
             
 
         }
-
-        $data["allSetting"] = $allapp_setting;
-
         $response = $data;
         return $response;
     } // End respond_to_browser_unauthenticated()

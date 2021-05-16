@@ -18,6 +18,7 @@ jQuery(document).ready(async function ($) {
     async function updateQR() {
         const json = await fetchChallenge();
         if(json){
+            console.log(json)
             let challenge = json.challenge;
     
             instance.json = json;
